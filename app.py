@@ -22,7 +22,7 @@ html_temp = """
 st.markdown(html_temp,unsafe_allow_html=True)
   
 st.title("""
-        Addition and Substraction on Image
+        Perform Translation on Image
          """
          )
 url = st.file_uploader("Please upload image", type=("jpg", "png"))
