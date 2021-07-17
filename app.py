@@ -1,15 +1,13 @@
 import streamlit as st 
 from PIL import Image
 import pickle
+import cv2 
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-import tensorflow as tf
-from keras.preprocessing import image
 import os
 from werkzeug.utils import secure_filename
 st.set_option('deprecation.showfileUploaderEncoding', False)
-from keras.models import load_model
 
 html_temp = """
    <div class="" style="background-color:gray;" >
@@ -24,34 +22,50 @@ html_temp = """
 st.markdown(html_temp,unsafe_allow_html=True)
   
 st.title("""
-        Collor Palette
+        Addition and Substraction on Image
          """
          )
-file= st.file_uploader("Please upload image", type=("jpg", "png"))
-R = st.slider('R', min_value=0, max_value=255, step=1)
-G = st.slider('G', min_value=0, max_value=255, step=1)
-B = st.slider('B', min_value=0, max_value=255, step=1)
+url = st.file_uploader("Please upload image", type=("jpg", "png"))
 
 import cv2
 from  PIL import Image, ImageOps
-def import_and_predict(image_data):
-  #img = image.load_img(image_data, target_size=(224, 224))
-  #image = image.img_to_array(img)
-  #img_reshap= np.expand_dims(image, axis=0)
-  #img_reshap = preprocess_input(img_reshap)
-   
-  image_data[:] = [R,G,B]
+def import_and_predict(image):
+
+  img1=cv2.imread(url,1)
+  image = cv.cvtColor(img_T, cv.COLOR_BGR2RGB)
+  #@title Perform Translation on Images {run:"auto"} 
+  Operation = '-50' #@param ["-50", "150"] {allow-input: true}
+  if Operation=='-50':
+    M1 = np.float32([[1, 0, -50],[0, 1, 100], [0, 0, 1]])
+    img1 = cv.warpPerspective(image, M1, (image.shape[1]*2, image.shape[0]*2))
+    
+
+  if Operation=='150':
+    M2 = np.float32([[1, 0, 50],[0, 1, 150],[0, 0, 1]])
+    img1 = cv.warpPerspective(img1, M2, (image.shape[1]*2, image.shape[0]*2))
+    
+
   st.image(image_data, use_column_width=True)
   return 0
-if file is None:
+
+if url is None:
   st.text("Please upload an Image file")
 else:
-  file_bytes = np.asarray(bytearray(file.read()), dtype=np.uint8)
+  file_bytes = np.asarray(bytearray(url.read()), dtype=np.uint8)
   image = cv2.imdecode(file_bytes, 1)
-  st.image(file,caption='Uploaded Image.', use_column_width=True)
+  st.image(url,caption='Uploaded Image.', use_column_width=True)
     
-if st.button("Change Color"):
-  result=import_and_predict(image)
+if st.button("Translation 50 in X-direction"):
+   img1=cv2.imread(url,1)
+   img2=np.ones(img1.shape, dtype="uint8")*100
+   img=img1+img2
+   print(img)
+
+if st.button("Translation 150 in Y-direction"):
+   img1=cv2.imread(url,1)
+   img2=np.ones(img1.shape, dtype="uint8")*100
+   img=img1-img2
+   print(img)
   
 if st.button("About"):
   st.header(" Aachal Kala")
