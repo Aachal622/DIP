@@ -25,13 +25,13 @@ st.title("""
         Perform Translation on Image
          """
          )
-url = st.file_uploader("Please upload image", type=("jpg", "png"))
+file = st.file_uploader("Please upload image", type=("jpg", "png"))
 
 import cv2
 from  PIL import Image, ImageOps
 def import_and_predict(image):
 
-  img1=cv2.imread(url,1)
+  img1=cv2.imread(file,1)
   image = cv.cvtColor(img_T, cv.COLOR_BGR2RGB)
   #@title Perform Translation on Images {run:"auto"} 
   Operation = '-50' #@param ["-50", "150"] {allow-input: true}
@@ -48,27 +48,26 @@ def import_and_predict(image):
   st.image(image_data, use_column_width=True)
   return 0
 
-if url is None:
+if file is None:
   st.text("Please upload an Image file")
 else:
-  file_bytes = np.asarray(bytearray(url.read()), dtype=np.uint8)
+  file_bytes = np.asarray(bytearray(file.read()), dtype=np.uint8)
   image = cv2.imdecode(file_bytes, 1)
-  st.image(url,caption='Uploaded Image.', use_column_width=True)
+  st.image(file,caption='Uploaded Image.', use_column_width=True)
     
-if st.button("Translation 50 in X-direction"):
-   img1=cv2.imread(url,1)
+if st.button("Translation -50 in X-direction"):
+   img1=cv2.imread(file,1)
    img2=np.ones(img1.shape, dtype="uint8")*100
    img=img1+img2
    print(img)
 
 if st.button("Translation 150 in Y-direction"):
-   img1=cv2.imread(url,1)
+   img1=cv2.imread(file,1)
    img2=np.ones(img1.shape, dtype="uint8")*100
    img=img1-img2
    print(img)
   
 if st.button("About"):
-  st.header(" Aachal Kala")
   st.subheader("Student, Department of Computer Engineering")
 html_temp = """
    <div class="" style="background-color:orange;" >
