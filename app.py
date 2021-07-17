@@ -37,12 +37,12 @@ def import_and_predict():
   Operation = '-50' #@param ["-50", "150"] {allow-input: true}
   if Operation=='-50':
     M1 = np.float32([[1, 0, -50],[0, 1, 100], [0, 0, 1]])
-    img1 = cv.warpPerspective(image, M1, (image.shape[1]*2, image.shape[0]*2))
+    img1 = cv2.warpPerspective(image, M1, (image.shape[1]*2, image.shape[0]*2))
     
 
   if Operation=='150':
     M2 = np.float32([[1, 0, 50],[0, 1, 150],[0, 0, 1]])
-    img1 = cv.warpPerspective(img1, M2, (image.shape[1]*2, image.shape[0]*2))
+    img1 = cv2.warpPerspective(img1, M2, (image.shape[1]*2, image.shape[0]*2))
     
 
   st.image(image_data, use_column_width=True)
@@ -67,7 +67,7 @@ if st.button("Translation 150 in Y-direction"):
   
 if st.button("About"):
   st.subheader("Student, Department of Computer Engineering")
-st.subheader("Dhruv Sevak")
+  st.subheader("Dhruv Sevak")
 html_temp = """
    <div class="" style="background-color:orange;" >
    <div class="clearfix">           
