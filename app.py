@@ -29,7 +29,7 @@ file = st.file_uploader("Please upload image", type=("jpg", "png"))
 
 import cv2
 from  PIL import Image, ImageOps
-def import_and_predict(image):
+def import_and_predict():
 
   img1=cv2.imread(file,1)
   image = cv.cvtColor(img_T, cv.COLOR_BGR2RGB)
@@ -56,19 +56,18 @@ else:
   st.image(file,caption='Uploaded Image.', use_column_width=True)
     
 if st.button("Translation -50 in X-direction"):
-   img1=cv2.imread(file,1)
-   img2=np.ones(img1.shape, dtype="uint8")*100
-   img=img1+img2
-   print(img)
+  M1 = np.float32([[1, 0, -50],[0, 1, 100], [0, 0, 1]])
+  img1 = cv.warpPerspective(image, M1, (image.shape[1]*2, image.shape[0]*2))
+  print(img1)
 
 if st.button("Translation 150 in Y-direction"):
-   img1=cv2.imread(file,1)
-   img2=np.ones(img1.shape, dtype="uint8")*100
-   img=img1-img2
-   print(img)
+   M2 = np.float32([[1, 0, 50],[0, 1, 150],[0, 0, 1]])
+   img1 = cv.warpPerspective(img1, M2, (image.shape[1]*2, image.shape[0]*2))
+   print(img1)
   
 if st.button("About"):
   st.subheader("Student, Department of Computer Engineering")
+st.subheader("Dhruv Sevak")
 html_temp = """
    <div class="" style="background-color:orange;" >
    <div class="clearfix">           
